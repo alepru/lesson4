@@ -1,0 +1,107 @@
+<md-dialog >
+  <form ng-cloak>
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2 ng-if="ctrl.locals.formType">Add new Note</h2>
+         <h2 ng-if="!ctrl.locals.formType">Edit Note</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Close dialog" ng-click="ctrl.cancel()">
+          <md-icon >close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+<div layout="row" >
+  <md-input-container flex="35" style="margin-bottom: 0px">
+  <label>Select Type</label>
+      <md-select ng-model="ctrl.locals.item.type">
+               <md-option value="simple">
+                simple
+              </md-option>
+              <md-option value="task">
+                task
+              </md-option>
+        </md-select>
+   </md-input-container>
+  <md-input-container flex="60" style="margin-bottom: 0px">
+     <label>Name</label>
+    <input type="text" ng-model="ctrl.locals.item.title"  >
+</md-input-container>
+</div>
+
+
+  <md-input-container ng-if=" ctrl.locals.item.type=='simple' " flex="90" >
+    <md-icon >text_fields</md-icon>
+    <label>Text</label>
+    <textarea  ng-model="ctrl.locals.item.noteText" ></textarea>
+</md-input-container>
+
+<div layout="row">
+  <md-input-container ng-if=" ctrl.locals.item.type=='task' ">
+	<label>Date</label>
+	<md-datepicker  ng-model="ctrl.locals.item.date"></md-datepicker>
+  
+	</md-input-container>
+   <md-input-container ng-if=" ctrl.locals.item.type=='task' ">
+      <label>Time</label>
+     <input type="time" ng-model="ctrl.locals.item.date">
+   </md-input-container>
+  </md-input-container>
+
+          
+</div>
+
+  <md-input-container ng-if=" ctrl.locals.item.type=='task'" flex="90" >
+    <md-icon >text_fields</md-icon>
+    <label>Description</label>
+    <textarea  ng-model="ctrl.locals.item.noteText" ></textarea>
+</md-input-container>
+  
+  
+  <div layout="row" flex>
+ <md-input-container>
+    <md-button class="md-icon-button" aria-label="Priority" >
+                             <md-icon style="color: green" ng-if="ctrl.locals.item.priority == -1">low_priority</md-icon>
+                             <md-icon ng-if="ctrl.locals.item.priority == 0">label</md-icon>
+                             <md-icon style="color: red" ng-if="ctrl.locals.item.priority == 1">priority_high</md-icon>
+             </md-button>
+ </md-input-container>
+
+   <md-input-container    >
+            <label>Priority</label>
+            
+            <md-select ng-model="ctrl.locals.item.priority" >
+              <md-option value=0>
+                normal
+              </md-option>
+              <md-option value=-1>
+                low
+              </md-option>
+              <md-option value=1>
+                high
+              </md-option>
+            </md-select>
+</md-input-container>
+
+    <md-input-container ng-if="ctrl.locals.item.type=='task'"  >
+    <md-icon >timer</md-icon>
+	<label>Duration</label>
+	<input ng-model="ctrl.locals.item.taskTime" type="number">
+	</md-input-container>
+          
+  </div>
+          
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button class="md-raised md-primary" ng-click="ctrl.cancel()">
+       Cancel
+      </md-button>
+      <md-button class="md-raised md-primary" ng-click="ctrl.confirm(ctrl.locals.item)">
+        Confirm
+      </md-button>
+      
+    </md-dialog-actions>
+  </form>
+</md-dialog>

@@ -1,0 +1,59 @@
+<md-content class="md-padding scroll tab-content" >
+     
+                   <md-grid-list md-cols="3" md-row-height="2:2"  md-cols-xs="1" md-cols-md="3" md-cols-gt-md="5" >
+
+        <md-grid-tile   ng-style="{background: customListCtrl.backGroundColor($index,item)}"  ng-repeat="item in (customListCtrl.selectedItem.currentTab[customListCtrl.tab] = (customListCtrl.items 
+                       | filter:customListCtrl.filterFunction 
+                       | filter: customListCtrl.filterSearch() 
+                       | orderBy:customListCtrl.itemSort()   ))"  ng-click="customListCtrl.toggleSelection(item)" layout="column" flex >
+     
+     <div loyout="column" style="width: 100%;height: 100%;">
+
+
+    <div  style="background: rgba(86, 180, 255, 0.52); text-align: center;" >
+                            
+                              <h3 >{{item.title}}</h3>
+                         
+    </div>       
+
+    <div flex layout="column">
+                        <div flex="70" >
+                        <p>{{item.noteText}} </p>
+                        </div>  
+    </div>
+
+              
+<md-grid-tile-footer  >
+            <div  layout="row">
+                        <div  flex="15" > 
+                            <div ng-click="customListCtrl.changePriority(item)" style="text-align: center;">
+                             <md-button ng-click="customListCtrl.changePriority(item)" class="md-icon-button" aria-label="Priority" style="z-index: 2">
+                             <md-icon style="color: green" ng-if="item.priority == -1">low_priority</md-icon>
+                             <md-icon ng-if="item.priority == 0">label</md-icon>
+                             <md-icon style="color: red" ng-if="item.priority == 1">priority_high</md-icon>
+                            </md-button>
+                            </div>
+                        </div>   
+
+                        <md-divider vertical class="vertical-divider" > </md-divider>
+
+                     <div flex="60" >   
+                        <p> {{item.date | date: "dd-MM-yyyy HH:mm"}}</p>  
+                     </div>
+                        <div flex="10">
+                         <p ng-if="(item.type=='task' && item.taskTime != null ) " > / {{item.taskTime}} h </p> 
+                        </div>   
+                        <md-divider vertical class="vertical-divider"> </md-divider>  
+
+                      <div flex="10" >          
+                            <md-checkbox ng-model="item.done" ng-change="customListCtrl.checkStateChanged()" class="md-primary md-align-top-right"   style="margin-left: 25%;margin-top: 25%;">
+                           </md-checkbox>
+                           
+                        </div>
+            </div>         
+</md-grid-tile-footer>          
+    </div>                                 
+                       </md-grid-tile>
+                   </md-grid-list>
+                   
+               </md-content>

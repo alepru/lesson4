@@ -1,0 +1,55 @@
+/* Style for add button */
+
+.add-button {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+}
+
+md-tabs.md-dynamic-height md-tabs-content-wrapper,
+md-tab-content.md-no-scroll,
+md-tab-content.md-no-scroll>div,
+.no-scroll {
+    height: 100%;
+    overflow-y: hidden !important;
+}
+
+.scroll {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.tab-content {
+    height: calc(100% - 50px);
+}
+
+.selected {
+    background: #00E676;
+}
+
+#searchBox,#searchBox:focus{
+    color: white;
+    border-color: #00E676;
+}
+
+.vertical-divider {
+  border-top-width: 0;
+  border-bottom-width: 0;
+  border-right-width: 1px;
+  border-right-style: solid;
+  margin: 2px;
+  position: relative;
+  width: 1px;
+}
+
+.div-list h1,h2,h3,p{
+    -webkit-margin-after: 8px;
+    -webkit-margin-before: 8px;
+    line-height:21px;
+    word-wrap:break-word;
+    
+}
+
+md-grid-tile-footer figcaption  {
+  width:100%;
+}

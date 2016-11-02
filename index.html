@@ -4,60 +4,170 @@
 <head>
     <meta charset="UTF-8">
     <title>Task App</title>
-   provaaaa
+    
     <!-- Angular Material style sheet -->
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles/angular-material.min.css">
+    <link href="styles/icon.css" rel="stylesheet">
     <!-- App Styles -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/style.css">
 
     <!-- Angular Material requires Angular.js Libraries -->
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+    <script src="googleapis/angular.min.js"></script>
+    <script src="googleapis/angular-animate.min.js"></script>
+    <script src="googleapis/angular-aria.min.js"></script>
+    <script src="googleapis/angular-messages.min.js"></script>
 
     <!-- Angular Material Library -->
-    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+    <script src="googleapis/angular-material.min.js"></script>
 
     <!-- Code Behind -->
-    <script src="script.js"></script>
-    <script src="customList.directive.js"></script>
-    <script src="storageService.js"></script>
+    <script src="app/todoApp.module.js"></script>
+    <script src="app/todo.controller.js"></script>
+    <script src="app/components/storage.service.js"></script>
+    <!-- <script src="app/todoItem.service.js"></script> -->
+    <script src="app/components/customList.directive.js"></script>
+
 
 </head>
 
 <body ng-app="todoApp" class="no-scroll">
     <div ng-controller="TodoController as ctrl" class="no-scroll">
         <div layout="column" class="no-scroll">
-            <md-toolbar class="md-whiteframe-3dp">
+            <md-toolbar class="md-whiteframe-5dp">
                 <div class="md-toolbar-tools">
-                    <h2>
-                        <span>Task App</span>
-                    </h2>
-                    <span flex></span>
-                    <md-button ng-disabled="ctrl.selectedItem == null" ng-click="ctrl.deleteItem()" class="md-icon-button" aria-label="Delete">
-                        <md-icon> delete </md-icon>
+                <div layout="column">  
+                <span style="font-size: 16px"> App By Alessandro Pruiti</span>
+                <span style="font-size: 10px"> matricola: O55000275</span>
+                </div>
+                
+                <span flex></span>
+                <md-divider vertical class="vertical-divider" style="height: 70%;color: rgb(30,136,229);" > </md-divider>
+                <div ng-if="ctrl.viewType == 0" class="md-icon-button">
+                 <md-button class="md-icon-button" ng-click="ctrl.toggleIcon('viewType')" >   
+                  <md-tooltip md-direction="down">List view</md-tooltip>    
+                 <md-icon >view_list</md-icon>    
+                 </md-button>
+                </div>
+
+                <div ng-if="ctrl.viewType == 1" class="md-icon-button">
+                 <md-button class="md-icon-button" ng-click="ctrl.toggleIcon('viewType')" >   
+                  <md-tooltip md-direction="down">Grid view</md-tooltip>    
+                 <md-icon >grid_on</md-icon>    
+                 </md-button>
+                </div>
+
+                
+
+                <div ng ng-if="ctrl.sortBy==0" class="md-icon-button">
+                 <md-button class="md-icon-button" ng-click="ctrl.toggleIcon('sortBy')">   
+                  <md-tooltip md-direction="down">Sort by alpha</md-tooltip>    
+                 <md-icon >sort_by_alpha</md-icon>    
+                 </md-button>
+                </div>
+
+                  <div ng-if="ctrl.sortBy==1" class="md-icon-button">
+                 <md-button class="md-icon-button" ng-click="ctrl.toggleIcon('sortBy')">   
+                  <md-tooltip md-direction="down">Sort by date</md-tooltip>    
+                 <md-icon >date_range</md-icon>    
+                 </md-button>
+                </div>
+
+                <md-divider vertical class="vertical-divider" style="height: 70%;color: rgb(30,136,229);" > </md-divider>
+
+                <div ng-if="ctrl.searchIn==0" class="md-icon-button">
+                 <md-button class="md-icon-button" ng-click="ctrl.toggleIcon('searchIn')">   
+                  <md-tooltip md-direction="down">Complete search</md-tooltip>    
+                 <md-icon >all_inclusive</md-icon>    
+                 </md-button>
+                </div>
+                
+                <div ng-if="ctrl.searchIn==1" class="md-icon-button">
+                 <md-button class="md-icon-button" ng-click="ctrl.toggleIcon('searchIn')">   
+                  <md-tooltip md-direction="down">Title search</md-tooltip>    
+                 <md-icon >title</md-icon>    
+                 </md-button>
+                </div>
+                 
+
+                <div class="md-icon-button">
+                <md-tooltip md-direction="down">Search</md-tooltip>
+                <md-button  ng-click="ctrl.searchShow()" class="md-icon-button" aria-label="serch">   
+                <md-icon ng-style="{color: ctrl.searchIconColor}">search </md-icon>
+                </md-button>
+                </div>
+
+                <md-input-container ng-show="ctrl.isSearchShow" style="margin-bottom: 0px">
+                    <label style="color: transparent;">Search</label>
+                     <input id="searchBox"  ng-model="ctrl.searchInput">
+                </md-input-container>
+
+                <md-divider vertical class="vertical-divider" style="height: 70%;color: rgb(30,136,229);" > </md-divider>
+                
+                <div class="md-icon-button">
+                    <md-tooltip md-direction="down">Select all</md-tooltip>
+                   <md-button ng-disabled="ctrl.selectedItem.currentTab[ctrl.currentTab] == 0" ng-click="ctrl.selectAll()" class="md-icon-button" aria-label="Delete">
+                        <md-icon ng-style="(ctrl.selectedItem.currentTab[ctrl.currentTab] != 0) && {color: ctrl.iconColor('select_all')}">select_all </md-icon>
                     </md-button>
+                </div>    
+
+                <div class="md-icon-button">
+                    <md-tooltip md-direction="down">Edit</md-tooltip>  
+                 <md-button ng-disabled="ctrl.selectedItem.selected.length != 1" ng-click="ctrl.addTask($event,false,ctrl.selectedItem.selected[0])" class="md-icon-button">   
+                 <md-icon >edit</md-icon>    
+                 </md-button>
+                </div>
+
+                   <div class="md-icon-button">
+                        <md-tooltip md-direction="down">Delete</md-tooltip>
+                    <md-button ng-disabled="ctrl.selectedItem.selected.length == 0" ng-click="ctrl.deleteItem()" class="md-icon-button" aria-label="Delete">
+                        <md-icon> delete </md-icon> 
+                    </md-button>
+                   </div>
+                    
                 </div>
             </md-toolbar>
+          
             <md-content class="no-scroll">
-                <md-tabs md-dynamic-height md-border-bottom class="no-scroll">
-                    <md-tab label="Todo">
-                        <custom-list items="ctrl.items" selected-item="ctrl.selectedItem" filter-function="ctrl.notDone"></custom-list>
+         <md-tabs md-dynamic-height md-border-bottom class="no-scroll">
+            <md-tab label="Todo" ng-click="ctrl.cleanSelectedItem(0)">  
+                    <custom-list template=ctrl.customTemplate[ctrl.viewType] 
+                        items="ctrl.items" 
+                        selected-item="ctrl.selectedItem" 
+                        filter-function="ctrl.notDone" 
+                        search="ctrl.searchInput" 
+                        tab="0"
+                        sort-by =ctrl.sortBy
+                        search-in = ctrl.searchIn >
+                   </custom-list>
+            </md-tab>
+             <md-tab label="Done" ng-click="ctrl.cleanSelectedItem(1)">
+                        <custom-list template=ctrl.customTemplate[ctrl.viewType] 
+                        items="ctrl.items" 
+                        selected-item="ctrl.selectedItem" 
+                        filter-function="ctrl.done" 
+                        search="ctrl.searchInput" 
+                        tab="1"
+                        sort-by =ctrl.sortBy
+                        search-in = ctrl.searchIn >
+                        </custom-list>
                     </md-tab>
-                    <md-tab label="Done">
-                        <custom-list items="ctrl.items" selected-item="ctrl.selectedItem" filter-function="ctrl.done"></custom-list>
-                    </md-tab>
-                    <md-tab label="All">
-                        <custom-list items="ctrl.items" selected-item="ctrl.selectedItem" filter-function="ctrl.all"></custom-list>
-                    </md-tab>
-                </md-tabs>
-                <md-button class="md-fab md-primary add-button" aria-label="Add Todo" ng-click="ctrl.addTask($event)">
+            <md-tab label="All" ng-click="ctrl.cleanSelectedItem(2)">
+                        <custom-list template=ctrl.customTemplate[ctrl.viewType]
+                        items="ctrl.items" 
+                        selected-item="ctrl.selectedItem" 
+                        filter-function="ctrl.all" 
+                        search="ctrl.searchInput" 
+                        tab="2"
+                        sort-by =ctrl.sortBy
+                        search-in = ctrl.searchIn >
+                        </custom-list>
+            </md-tab>
+         </md-tabs>
+                <md-button class="md-fab md-primary add-button" aria-label="Add Todo" ng-click="ctrl.addTask($event,true,ctrl.defaultItem())">
                     <md-icon>add</md-icon>
                 </md-button>
             </md-content>
-
+        </div>
         </div>
 </body>
 
