@@ -30,6 +30,6 @@ features
 Installation Guide e Demo
 ------------------
 Caricare la directory su un web Server online o in locale (es internet information service o wamp) e aprire il file index.html,
-è possibile visionare la demo su [http://pru.altervista.org/taskapp/index.html](http://pru.altervista.org/index.html)
+è possibile visionare la demo su [http://pru.altervista.org/taskapp/index.html](http://pru.altervista.org/taskapp/index.html)
  
 
